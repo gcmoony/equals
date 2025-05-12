@@ -66,7 +66,15 @@ class CommonToolsPage extends StatelessWidget {
                           appBar: AppBar(
                             title: const Text("Fahrenheit - Celsius"),
                           ),
-                          body: Text("Item 3 body"),
+                          body: ConversionItem(
+                            conversionRate: 0,
+                            firstUnitName: "Fahrenheit",
+                            secondUnitName: "Celsius",
+                            conversionFunctionFirst:
+                                (value) => (value - 32) * (5 / 9),
+                            conversionFunctionSecond:
+                                (value) => (value * (9 / 5)) + 32,
+                          ),
                         );
                       },
                     ),
@@ -85,10 +93,14 @@ class ConversionItem extends StatefulWidget {
     required this.conversionRate,
     required this.firstUnitName,
     required this.secondUnitName,
+    this.conversionFunctionFirst,
+    this.conversionFunctionSecond,
   });
   final String firstUnitName;
   final String secondUnitName;
   final double conversionRate;
+  final Function(double valueToConvert)? conversionFunctionFirst;
+  final Function(double valueToConvert)? conversionFunctionSecond;
 
   @override
   State<ConversionItem> createState() => _ConversionItemState();
@@ -175,7 +187,13 @@ class _ConversionItemState extends State<ConversionItem> {
                     errMsg1 = "Must be a valid number";
                     firstUnitValue = 0;
                   }
-                  secondUnitValue = firstUnitValue * widget.conversionRate;
+                  if (widget.conversionFunctionFirst != null) {
+                    secondUnitValue = widget.conversionFunctionFirst!(
+                      firstUnitValue,
+                    );
+                  } else {
+                    secondUnitValue = firstUnitValue * widget.conversionRate;
+                  }
                 }),
           ),
         ),
@@ -198,7 +216,13 @@ class _ConversionItemState extends State<ConversionItem> {
                     errMsg2 = "Must be a valid number";
                     secondUnitValue = 0;
                   }
-                  firstUnitValue = secondUnitValue / widget.conversionRate;
+                  if (widget.conversionFunctionSecond != null) {
+                    firstUnitValue = widget.conversionFunctionSecond!(
+                      secondUnitValue,
+                    );
+                  } else {
+                    firstUnitValue = secondUnitValue / widget.conversionRate;
+                  }
                 }),
           ),
         ),
