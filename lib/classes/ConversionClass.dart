@@ -24,69 +24,26 @@ class _ConversionItemState extends State<ConversionItem> {
   double secondUnitValue = 0;
   String errMsg1 = "";
   String errMsg2 = "";
+  final TextEditingController _firstValueController = TextEditingController();
+  final TextEditingController _secondfValueController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Card(
-            elevation: 4,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SelectionArea(
-                            child: Text(
-                              firstUnitValue.toStringAsFixed(3),
-                              style: Theme.of(context).textTheme.displaySmall,
-                              softWrap: false,
-                              overflow: TextOverflow.fade,
-                            ),
-                          ),
-                        ),
-                        Text(widget.firstUnitName),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(child: Center(child: Icon(Icons.multiple_stop))),
-                Expanded(
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SelectionArea(
-                            child: Text(
-                              secondUnitValue.toStringAsFixed(3),
-                              style: Theme.of(context).textTheme.displaySmall,
-                              softWrap: false,
-                              overflow: TextOverflow.fade,
-                            ),
-                          ),
-                        ),
-                        Text(widget.secondUnitName),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
         Text(widget.firstUnitName),
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: TextField(
+            onTap:
+                () =>
+                    _firstValueController.selection = TextSelection(
+                      baseOffset: 0,
+                      extentOffset: _firstValueController.value.text.length,
+                    ),
+            keyboardType: TextInputType.number,
+            controller: _firstValueController,
             decoration: InputDecoration(
               hintText: "1",
               helperText: widget.firstUnitName,
@@ -128,6 +85,8 @@ class _ConversionItemState extends State<ConversionItem> {
                   } else {
                     secondUnitValue = firstUnitValue * widget.conversionRate;
                   }
+                  _secondfValueController.text = secondUnitValue
+                      .toStringAsFixed(3);
                 }),
           ),
         ),
@@ -136,7 +95,14 @@ class _ConversionItemState extends State<ConversionItem> {
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: TextField(
-            // controller: TextEditingController(text: centimeters.toString()),
+            controller: _secondfValueController,
+            onTap:
+                () =>
+                    _secondfValueController.selection = TextSelection(
+                      baseOffset: 0,
+                      extentOffset: _secondfValueController.value.text.length,
+                    ),
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(
               hintText: "2.54",
               helperText: widget.secondUnitName,
@@ -177,6 +143,9 @@ class _ConversionItemState extends State<ConversionItem> {
                   } else {
                     firstUnitValue = secondUnitValue / widget.conversionRate;
                   }
+                  _firstValueController.text = firstUnitValue.toStringAsFixed(
+                    3,
+                  );
                 }),
           ),
         ),
