@@ -1,4 +1,6 @@
 import 'package:equals/routes/commontools.dart';
+import 'package:equals/routes/lengths.dart';
+import 'package:equals/routes/mass.dart';
 import 'package:equals/routes/settings.dart';
 import 'package:equals/routes/volume.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       case 2:
         {
+          currentWidgetPage = MassPage();
+          break;
+        }
+      case 3:
+        {
+          currentWidgetPage = LengthsPage();
+          break;
+        }
+      case 4:
+        {
           currentWidgetPage = SettingsPage();
           break;
         }
@@ -64,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: currentWidgetPage,
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         onTap:
             (newIndex) => setState(() {
               selectedIndex = newIndex;
@@ -72,6 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.handyman), label: "Common"),
           BottomNavigationBarItem(icon: Icon(Icons.water), label: "Volume"),
+          BottomNavigationBarItem(icon: Icon(Icons.scale), label: "Mass"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.format_line_spacing),
+            label: "Lengths",
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: "Settings",
