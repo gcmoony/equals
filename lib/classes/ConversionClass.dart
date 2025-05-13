@@ -153,3 +153,32 @@ class _ConversionItemState extends State<ConversionItem> {
     );
   }
 }
+
+class UnitSelector extends StatefulWidget {
+  const UnitSelector({super.key});
+
+  @override
+  State<UnitSelector> createState() => UnitSelectorState();
+}
+
+List<String> sampleDropdownItems = <String>['One', 'Two', 'Three'];
+
+class UnitSelectorState extends State<UnitSelector> {
+  String dropDownValue = sampleDropdownItems.first;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: dropDownValue,
+      items:
+          sampleDropdownItems.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(value: value, child: Text(value));
+          }).toList(),
+      onChanged: (String? value) {
+        setState(() {
+          dropDownValue = value!;
+        });
+      },
+    );
+  }
+}
