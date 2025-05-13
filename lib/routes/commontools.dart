@@ -35,27 +35,6 @@ class CommonToolsPage extends StatelessWidget {
                 },
           ),
           ListTile(
-            title: const Text("Pound - Kilogram"),
-            onTap:
-                () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return Scaffold(
-                          appBar: AppBar(title: const Text("Pound - Kilogram")),
-                          body: ConversionItem(
-                            conversionRate: 0.45359237,
-                            firstUnitName: "Pound",
-                            secondUnitName: "Kilogram",
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                },
-          ),
-          ListTile(
             title: const Text("Fahrenheit - Celsius"),
             onTap:
                 () => {
